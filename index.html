@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html  lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Memory Game</title>
+		<!-- Site Icons -->
+		<link rel="shortcut icon" href="img/heart.png" sizes="16x16" type="image/png" />
+		<!-- CSS -->
+		<link rel="stylesheet" href="font-awesome/css/bootstrap.min.css" type="text/css"/>
+		<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css"/>
+		<link rel="stylesheet" href="styles.css" type="text/css"/>
+	</head>	
+	<body onload="onLoad()" class="backgroundColor" id="body">
+		<!-- start screen -->
+		<div id="startScreen">
+			<div id="startScreen_checkBox" type="checkbox" class="btn" onclick="startGame()">
+				Start Game
+			</div>
+		</div>
+		<!-- Goal and Data Menu -->
+		<div id="sliderPart">
+			<div class="block"></div>
+			<!-- Goal Header-->
+			<div id="header1" class="header">
+				<!-- Solve Button -->
+				<div id="solve">
+					<button id="solveBtn" type="button" class="btn btn-warning" onclick="autoSolve()">
+						<i class="fa fa-star fa-lg" aria-hidden="true"></i>
+					</button>
+				</div>
+				<!-- Up Down -->
+				<div id="btnGroup_goal_left">
+					<div class="btn-group" id="up_down">
+						<button type="button" class="btn btn-secondary" onclick="upDown2(-1)">
+							<i class="fa fa-chevron-down" aria-hidden="true"></i>
+						</button>
+						<button type="button" class="btn btn-secondary" onclick="upDown2(1)">
+							<i class="fa fa-chevron-up" aria-hidden="true"></i>
+						</button>
+					</div>
+				</div>
+				<div id="goal"><h3>Goal</h3></div>
+				<!-- Show -->
+				<div id="btnGroup_goal_right">
+					<div class="btn-group">
+						<form id="show">
+							<button disabled type="button" id="inputNmb2" class="btn btn-secondary">?</button>
+							<button type="button"id="All_goal" class="btn btn-secondary" onclick="nmbDataToShow2(`All`)">All</button>
+						</form>
+					</div>
+				</div>
+				<!-- Start Timer Button-->
+				<div id="startBtnAndTimer">
+					<button id="startTimerBtn" type="button" class="btn btn-danger" onclick="createTimer()">
+						<i class="fa fa-unlock-alt fa-lg" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+			<div class="block"></div>
+			<!-- Goal Slider -->
+			<div class="container-fluid" id="container2">
+				<!-- curtain__panel left-->
+				<div id="curtain_left" class="curtain_panel"></div>
+				<!-- Slider Array2-->
+				<div id="array2" class="curtain_inside">
+					<div id="previousNext2">
+						<a id="prev2" class="left carousel-control" href=".myCarousel2" role="button" data-slide="prev" onmousedown="adjust2(1)">
+						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+						</a>
+						<a id="next2" class="right carousel-control" href=".myCarousel2" role="button" data-slide="next" onmousedown="adjust2(-1)">
+						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						<span class="sr-only">Next</span>
+						</a>
+					</div>
+				</div>
+				<!-- curtain__panel right-->
+				<div id="curtain_right" class="curtain_panel">
+					<div id="showLevel"></div>
+				</div>
+			</div>
+			<div class="block"></div>
+			<hr>
+			<!-- Data Header-->
+			<div id="header2" class="header">
+				<!-- Up Down 2-->
+				<div id="btnGroup_data_left">
+					<div class="btn-group">
+						<div class="btn-group" id="up_down2">
+							<button type="button" class="btn btn-primary" onclick="upDown(-1)">
+								<i class="fa fa-chevron-down" aria-hidden="true"></i>
+							</button>
+							<button type="button" class="btn btn-primary" onclick="upDown(1)">
+								<i class="fa fa-chevron-up" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<h3 id="dataSet">Data</h3>
+				<!-- Show 2 -->
+				<div id="btnGroup_data_right">
+					<div class="btn-group">
+						<form id="show2">
+							<button disabled type="button" id="inputNmb" class="btn btn-primary">?</button>
+							<button type="button" id="All" class="btn btn-primary" onclick="nmbDataToShow(`All`)">All</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="block"></div>
+			<!-- Data Slider -->
+			<div class="container-fluid" id="container">
+				<!-- Slider Array1-->
+				<div id="array1">
+					<div id="previousNext">
+						<a id="prev" class="left carousel-control" href=".myCarousel" role="button" data-slide="prev" onmousedown="adjust(1)">
+						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+						</a>
+						<a id="next" class="right carousel-control" href=".myCarousel" role="button" data-slide="next" onmousedown="adjust(-1)">
+						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						<span class="sr-only">Next</span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="block"></div>
+			<hr>
+		</div>
+		<!-- Controllers Menu -->
+		<div id="controllers">
+			<!-- Undo Redo -->
+			<div id="header3" class="header">
+				<div id="#btnGroup_undo-redo_left">
+					<div class="undoGroup">
+						<a disabled href="#" class="btn btn-success" id="undoCount">0</a>
+						<button class="btn btn-success" href="#" onclick="undo()">
+							<i class="fa fa-undo" aria-hidden="true"></i>
+						</button>
+					</div>
+				</div>
+				<div id="action"><h3>Action</h3></div>
+				<div id="#btnGroup_undo-redo_right">
+					<div class="redoGroup">
+						<button class="btn btn-success" href="#" onclick="redo()">
+							<i class="fa fa-repeat" aria-hidden="true"></i>
+						</button>
+						<a disabled href="#" class="btn btn-success" id="redoCount">0</a>
+					</div>
+				</div>
+			</div>
+			<div class="block"></div>
+			<!-- Features -->
+			<div id="features">
+				<form onsubmit="return false">
+					<table id="features_table">
+						<!-- show selected data -->
+						<!-- Insert, Remove, Replace -->
+						<tbody>
+							<!-- Insert -->
+							<tr>
+								<td id="selectedDataBox" rowspan="2">
+									<div id="selectedData">
+										<div id="selectedDataValue"><text></text></div>
+									</div>
+								</td>
+								<!-- Single Multiple Radio Buttons -->
+								<td id="insertActions">
+									<div id="radioControllerBox">										
+										<input type="radio" id="single" name="insertCount" checked="checked" onclick="showSingleMultipleBox()">
+										<label class="btn btn-secondary" for="single">Single</label>
+										<input type="radio" id="multiple" name="insertCount" onclick="showSingleMultipleBox()">
+										<label class="btn btn-secondary" for="multiple" style="margin-top: 5px">Multiple</label>
+									</div>
+									<div id="insertInput">
+										<!-- Single Multiple Input Box -->
+										<span id="singleBox" class="single box">
+											<input disabled value="  1">
+										</span>
+										<span id="multipleBox" class="multiple box">
+											<input type="number" id="nmbOfInsert" class="input" onmousedown="insertHint()" oninput="validateNmb(this)" value="1">
+										</span>
+									</div>				
+								</td>
+								<!-- Insert Location -->
+								<td>
+									<div>Location: </div>
+									<span id="dropdown1" onclick="insertHint()"></span>	
+								</td>
+								<!-- Insert Button -->
+								<td>
+									<button type="submit" onclick="insertData()" class="btn btn-warning">Insert</button>
+								</td>
+							</tr>
+							<!-- Replace -->	
+							<tr id="replaceActions">
+								<td colspan="2">
+									<span>Select: </span>
+									<span id="dropdown2_2" class="dropdownUI_replace" onclick="replaceHint()"></span>
+								</td>
+								<td><button type="submit" onclick="replaceData()" class="btn btn-warning">Replace</button></td>
+							</tr>
+							<!-- Remove -->				
+							<tr id="removeActions">
+								<td class="black crossed"></td>
+								<td colspan="2">
+									<span id="dropdown2" class="dropdownUI" onclick="removeHint()" onchange="autoUpdateD3()"></span>
+									<span id="dropdown3" class="dropdownUI" onclick="removeHint()"></span>
+								</td>
+								<!-- Remove Button -->
+								<td><button type="submit" onclick="removeData()" class="btn btn-danger">Remove</button></td>
+							</tr>
+							<tr class="noBorder"><td class="noBorder"></td></tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+			<!-- Generate Mode -->
+			<div id="footer">
+				<div class="btn-group" id="generateData">
+					<a id="NoImgMode" class="btn btn-primary" href="#" onclick="generateData(this.id)">Normal Mode</a>
+					<button id="downButton" type="button" class="btn btn-primary  dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+					</button>
+					<ul class="dropdown-menu">
+						<li>
+							<a class="dropdown-item" href="#" onclick="generateData(`numbers`)">
+								Numbers
+							</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="#" onclick="generateData(`alphabets`)">
+								Alphabets
+							</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="#" onclick="generateData(`mix`)">
+								Mix [Hard]
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="btn-group" id="mode2">
+					<a id="imgMode" class="btn btn-primary" href="#" onclick="generateData(this.id)">Image Mode</a>
+					<button id="downButton" type="button" class="btn btn-primary  dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+					</button>
+					<ul class="dropdown-menu">
+						<li>
+							<a class="dropdown-item" href="#" onclick="generateData(`animals`)">
+								Animals
+							</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="#" onclick="generateData(`baoZhai`)">
+								Bao Zhai
+							</a>
+						</li>
+						<li><a class="dropdown-item" href="#" onclick="generateData(`chess`)">
+								Chess
+							</a>
+						</li>
+						<li><hr class="dropdown-divider"/></li>
+						<li><a id="demonSlayer" class="dropdown-item glow" href="#" onclick="generateData(`demonSlayer`)">
+								Demon Slayer
+							</a>
+						</li>
+
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="block"></div>
+		<!-- Moves -->
+		<div id="moves-container">
+			<div id="moves_box">
+				<div id="moves_header">Moves</div>
+				<div id="moves"></div>
+			</div>
+		</div>
+		<!-- Resources -->
+		<div id="resources" class="disappear">
+			<ul id="resources_ul">
+				<li><h4>Click Me!</h4></li>
+				<li id="hr"><hr class="dropdown-divider"/></li>
+			</ul>
+		</div>
+		<!-- Mute or Unmute Music -->
+		<div id="musicController">
+			<div id="mute" class="btn btn-danger" onclick="muteMusic()">
+				<i class="fa fa-music fa-lg" aria-hidden="true"><i class="fa fa-slash" aria-hidden="true"></i></i>
+			</div>
+			<div id="unmute" class="btn btn-success" onclick="unmuteMusic()">
+				<i class="fa fa-music fa-lg" aria-hidden="true"></i>
+			</div>
+		</div>
+		<!-- Message -->
+		<div id="message" class="disappear"></div>
+	</body>
+	<script src="js/amendArray.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</html>
