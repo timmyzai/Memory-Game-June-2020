@@ -73,7 +73,7 @@ audio_replace.volume = 0.1;
 audio_timer.volume = 0.3;
 audio_copy.volume = 0.1;
 audio_noMoreMoves.volume = 0.2;
-audio_win.volume = 0.1;
+audio_win.volume = 0.5;
 audio_startGame.volume = 0.2;
 audio_homura.volume = 0.2;
 
@@ -759,7 +759,7 @@ function generateGoal(obj){ //Generate by Random Moves
             replaceData(`randomMove`, randomInput, randomLocation);
         }
     }
-    console.log(`Number of goal slides: ${targetGoalSlides}\nFinal goal slide: ${array2}`);
+    // console.log(`Number of goal slides: ${targetGoalSlides}\nFinal goal slide: ${array2}`);
     if(mute == false){playMusic = true;}
     if(playMusic == true){
         if(obj == `demonSlayer`){
@@ -792,19 +792,18 @@ function winCheck(){
         audio_win.play();
     }
     win = true;
-    alert(`You have completed level ${level}`);
+    alert();
     closeCurtain();
     setTimeout(() => {nextLevel();}, 500);
 }
 function nextLevel(){
-    var nextLevel = confirm(`"OK" to next level?\n"Cancel" to play again current level`);
+    var nextLevel = confirm(`Level ${level} completed!!\n Going to Next Level?`);
     if(nextLevel == true){level += 1;}
     generateData(currentMode);
 }
 function checkMoves(){
     if(win == true){return false;}
     if(moves == 0){
-        console.log("asdf");
         if(playMusic == true){
             audio_noMoreMoves.currentTime = 0;
             audio_noMoreMoves.play();
@@ -1148,7 +1147,7 @@ function adjust(adjustValue){
     //disable the Next and Previous button
     setTimeout(() => {document.getElementById(`previousNext`).style.pointerEvents = "none";},125)
     adjustment = adjustment + adjustValue;
-    console.log(adjustment);
+    // console.log(adjustment);
     if(Math.abs(adjustment) == array1.length){adjustment = 0;} //prevent out of range
     //adjust hints and image after the slider animation
     setTimeout(adjustHints,750)
