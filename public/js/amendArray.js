@@ -792,12 +792,11 @@ function winCheck(){
         audio_win.play();
     }
     win = true;
-    alert();
     closeCurtain();
     setTimeout(() => {nextLevel();}, 500);
 }
 function nextLevel(){
-    var nextLevel = confirm(`Level ${level} completed!!\n Going to Next Level?`);
+    var nextLevel = confirm(`Level ${level} completed!!!\n Going to Next Level?`);
     if(nextLevel == true){level += 1;}
     generateData(currentMode);
 }
