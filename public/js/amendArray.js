@@ -478,7 +478,7 @@ function removeData(set, queueNmb2, nmbOfRemove){
     if(set == `randomMove`){
         //auto solve Message
         if(nmbOfRemove == 1){mementos5.push(`<big>Move :</big>Remove<br><big>Data: </big>${nmbOfRemove} x <br>${array2[queueNmb2-1]}`);} 
-        else {mementos5.push(`<big>Move: </big>Remove<br><big>Data: </big>${nmbOfRemove} x <br>${array2[queueNmb2-1]}' ~ '${array2[queueNmb2 - 1 + nmbOfRemove]}'`);}
+        else {mementos5.push(`<big>Move: </big>Remove<br><big>Data: </big>${nmbOfRemove} x <br>'${array2[queueNmb2-1]}' ~ '${array2[queueNmb2 - 1 + nmbOfRemove]}'`);}
         //remove Data
         array2.splice(queueNmb2 - 1, nmbOfRemove)
         mementos4.push([...array2]);
@@ -796,7 +796,7 @@ function winCheck(){
     setTimeout(() => {nextLevel();}, 500);
 }
 function nextLevel(){
-    var nextLevel = confirm(`Level ${level} completed!!!\n Going to Next Level?`);
+    var nextLevel = confirm(`Level ${level} completed!!!\nGoing to Next Level?`);
     if(nextLevel == true){level += 1;}
     generateData(currentMode);
 }
